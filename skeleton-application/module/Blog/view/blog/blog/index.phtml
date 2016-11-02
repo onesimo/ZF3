@@ -1,0 +1,17 @@
+<?php
+
+$this->headTitle('Blog');
+
+?>
+<table class="table">
+	<tr>
+		<th>Title</th>
+		<th>Action</th>
+	</tr>
+	<?php foreach ($posts as $post): ?>
+		<tr>
+			<td> <?=$this->escapeHtml($post['title']) ?></td>
+			<td></td>
+		</tr>
+	<?php endforeach; ?>
+</table>
