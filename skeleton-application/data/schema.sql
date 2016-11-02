@@ -1,6 +1,6 @@
-create table post (id INTEGER PRIMARY KEY AUTOINCREMENT), title varchar(255) not null, content text not null);
+CREATE TABLE post ( id INTEGER PRIMARY KEY AUTOINCREMENT, title varchar(100) NOT NULL, content TEXT NOT NULL);
 
-insert into post(title,content) values ('Post 1', 'content 1');
-insert into post(title,content) values ('Post 2', 'content 2');
-insert into post(title,content) values ('Post 3', 'content 3');
-insert into post(title,content) values ('Post 4', 'content 4');
+insert into post(title, content) values('Post 1', 'Content 1');
+insert into post(title, content) values('Post 2', 'Content 2');
+insert into post(title, content) values('Post 3', 'Content 3');
+insert into post(title, content) values('Post 4', 'Content 4');

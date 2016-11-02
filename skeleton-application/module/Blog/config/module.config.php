@@ -1,13 +1,13 @@
 <?php
 
 namespace Blog;
-
-use Zend\ServiceManager\Factory\invokableFactory;
+ 
+use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
 	'controllers' => [
 		'factories' => [
-			Controller\BlogController::class => invokableFactory::class
+			#Controller\BlogController::class => invokableFactory::class
 		]
 	],
 	'router' => [

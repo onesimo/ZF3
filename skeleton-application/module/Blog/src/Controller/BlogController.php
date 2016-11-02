@@ -2,20 +2,26 @@
 
 namespace Blog\Controller;
 
+use Blog\Model\PostTable;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 
 class BlogController extends AbstractActionController
-{
+{	
+	private $table;
+
+	public function __construct(PostTable $table)
+	{
+		$this->table = $table;
+	}
+
 	public function indexAction()
 	{	
-		$posts = [
-			['title' => 'post 1 ','content'=> 'content 1'],
-			['title' => 'post 2 ','content'=> 'content 2'],
-			['title' => 'post 3 ','content'=> 'content 3'],
-			['title' => 'post 4 ','content'=> 'content 4'],
-		];
-		return new ViewModel(['posts' => $posts]);
+		$postTable = $this->table;
+
+		return new ViewModel([
+			'posts' => $postTable->fetchAll()
+		]);
 	}
 }
