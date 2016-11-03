@@ -12,17 +12,23 @@ return [
 	],
 	'router' => [
 		'routes' => [
-			'blog' => [
-				'type' => 'literal',
+			'post' => [
+				'type' => 'segment',
 				'options' => [
-					'route' => '/blog',
+					'route' => '/blog[/:action[/:id]]',
+					'constraints' => [
+						'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+						'id' =>'[0-9]+'
+
+					],
 					'defaults' => [
 						'controller' => Controller\BlogController::class,
 						'action' => 'index'
 					]
 				]
-			]
-		]
+			],
+
+		],
 	],
 	'view_manager' => [
 		'template_path_stack' => [
