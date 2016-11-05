@@ -3,10 +3,9 @@
 namespace Blog;
 
 use Blog\Controller\BlogController;
-use Zend\Db\Adapter\AdapterInterface;
-use Zend\Db\ResultSet\ResultSet;
-use Zend\Db\TableGateway\TableGateway;
+use Blog\Model\Factory\PostTableGatewayFactory; 
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
+
 
 class Module implements ConfigProviderInterface
 {
@@ -23,14 +22,7 @@ class Module implements ConfigProviderInterface
 					$tableGateway = $container->get(Model\PostTableGateway::class);
 					return new Model\PostTable($tableGateway);
 				},
-				Model\PostTableGateway::class => function($container) {
-
-					$dbAdapter = $container->get(AdapterInterface::class);
-					$resultSetPrototype = new ResultSet();
-					$resultSetPrototype->setArrayObjectPrototype(new Model\Post());
-
-					return new tableGateway('post', $dbAdapter, null, $resultSetPrototype);
-				}
+				Model\PostTableGateway::class => PostTableGatewayFactory::class
 			]
 		];
 	}
