@@ -3,11 +3,17 @@
 namespace Blog;
 
 use Blog\Controller\BlogController;
-use Blog\Model\Factory\PostTableGatewayFactory; 
+use Blog\Controller\Factory\BlogControllerFactory;
+use Blog\Model\Factory\PostTableFactory;
+use Blog\Model\Factory\PostTableGatewayFactory;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\ModuleManager\Feature\ServiceProviderInterface;
+use Zend\ModuleManager\Feature\ControllerProviderInterface;
 
 
-class Module implements ConfigProviderInterface
+class Module implements ConfigProviderInterface, 
+ServiceProviderInterface, 
+ControllerProviderInterface
 {
 	public function getConfig()
 	{
@@ -18,10 +24,7 @@ class Module implements ConfigProviderInterface
 	{
 		return [
 			'factories' => [
-				Model\PostTable::class => function ($container){
-					$tableGateway = $container->get(Model\PostTableGateway::class);
-					return new Model\PostTable($tableGateway);
-				},
+				Model\PostTable::class => PostTableFactory::class,
 				Model\PostTableGateway::class => PostTableGatewayFactory::class
 			]
 		];
@@ -31,11 +34,7 @@ class Module implements ConfigProviderInterface
 	{
 		return [
 			'factories' => [
-				BlogController::class => function($container) {
-					return new BlogController(
-						$container->get(Model\PostTable::class)
-					);
-				}
+				BlogController::class => BlogControllerFactory::class
 			]
 		];
 	}

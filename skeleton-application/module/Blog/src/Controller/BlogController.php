@@ -7,6 +7,8 @@ use Blog\Model\Post;
 use Blog\Model\PostTable;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\Validator\Digits;
+ 
 
 
 
@@ -29,7 +31,15 @@ class BlogController extends AbstractActionController
 	}
 
 	public function addAction()
-	{
+	{   
+	    
+	    $cpf = "000.000.000-00";
+	    $validator = new Digits();
+	    $validator->setMessage("Número inválido", Digits::NOT_DIGITS);
+	    echo $validator->isValid($cpf) ? "valido" : "invalido";
+	       
+	    var_dump($validator->getMessages());
+	    
 		$form = new PostForm();
 		$form->get('submit')->setValue('Add Post');
 
@@ -44,7 +54,6 @@ class BlogController extends AbstractActionController
 		if(!$form->isValid()){
 			return ['form'=>$form];
 		}
-
 
 		$post = new Post();
         $post->exchangeArray($form->getData());
