@@ -3,6 +3,7 @@
 namespace Blog\Form;
 
 use Zend\Form\Form;
+use Zend\Form\Element;
 
 class PostForm extends Form
 {
@@ -13,12 +14,12 @@ class PostForm extends Form
 
 		$this->add([
 			'name' => 'id',
-			'type' => 'hidden'
+			'type' => Element\Hidden::class
 		]);
 
 		$this->add([
 			'name' => 'title',
-			'type' => 'text',
+			'type' => Element\Text::class,
 			'options' =>[ 
 				'label' => 'Title'
 			]
@@ -26,7 +27,7 @@ class PostForm extends Form
 
 		$this->add([
 			'name' => 'content',
-			'type' => 'text',
+			'type' => Element\Textarea::class,
 			'options' =>[ 
 				'label' => 'Content'
 			]
@@ -34,7 +35,7 @@ class PostForm extends Form
 
 		$this->add([
 			'name' => 'submit',
-			'type' => 'submit',
+			'type' => Element\Submit::class,
 			'attributes' => [
 				'value' => 'Go',
 				'id' => 'submitbutton'

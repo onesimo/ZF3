@@ -3,10 +3,12 @@
 <?php
 
 $title = $form->get('title');
-$title->setAttribute('class','form-control');
+$title->setAttribute('class','form-control')
+      ->setLabelAttributes(['class' =>'control-label']);
 
 $content = $form->get('content');
-$content->setAttribute('class','form-control');
+$content->setAttribute('class','form-control')
+        ->setLabelAttributes(['class' =>'control-label']);
 
 
 $submit = $form->get('submit');
@@ -19,14 +21,18 @@ $form->prepare();
 echo $this->form()->openTag($form);
 ?>
 
-<div class='form-group'>
-	<?=$this->formLabel($title); ?>
-	<?=$this->formElement($title); ?>
+<?php $message = $this->formelementerrors($title,['class' => 'help-block']); ?>
+<div class='form-group <?= $message ? "has-error" : "" ?>'>
+	<?= $this->formLabel($title); ?>
+	<?= $this->formElement($title); ?>
+	<?= $message ?>
 </div>
 
-<div class='form-group'>
-	<?=$this->formLabel($content); ?>
-	<?=$this->formElement($content); ?>
+<?php $message = $this->formelementerrors($content,['class' => 'help-block']); ?>
+<div class='form-group <?= $message ? "has-error" : "" ?>''>
+	<?= $this->formLabel($content); ?>
+	<?= $this->formElement($content); ?>
+	<?= $message ?>
 </div>
 
 <?php

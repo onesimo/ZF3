@@ -4,6 +4,8 @@ namespace Blog;
 
 use Blog\Controller\BlogController;
 use Blog\Controller\Factory\BlogControllerFactory;
+use Blog\Form\Factory\PostFormFactory;
+use Blog\Form\PostForm;
 use Blog\Model\Factory\PostTableFactory;
 use Blog\Model\Factory\PostTableGatewayFactory;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
@@ -25,7 +27,8 @@ ControllerProviderInterface
 		return [
 			'factories' => [
 				Model\PostTable::class => PostTableFactory::class,
-				Model\PostTableGateway::class => PostTableGatewayFactory::class
+				Model\PostTableGateway::class => PostTableGatewayFactory::class,
+			    PostForm::class => PostFormFactory::class
 			]
 		];
 	}
