@@ -11,12 +11,12 @@ class PostForm extends Form
 	public function __construct($name = null)
 	{
 		parent::__construct('post');
-
-		$this->add([
-			'name' => 'id',
-			'type' => Element\Hidden::class
-		]);
-
+        
+        $this->add([
+           'name' => 'id',
+            'type' => Element\Hidden::class
+        ]);
+        
 		$this->add([
 			'name' => 'title',
 			'type' => Element\Text::class,
