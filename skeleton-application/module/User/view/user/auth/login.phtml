@@ -7,10 +7,10 @@ $username->setAttribute('class','form-control')
 
 $password = $form->get('password');
 $password->setAttribute('class','form-control')
-        ->setLavelAttributes(['class'=>'control-label']);
+        ->setLabelAttributes(['class'=>'control-label']);
 
 $submit = $form->get('submit');
-$submit->setAttributes('class','btn btn-primary');
+$submit->setAttribute('class','btn btn-primary');
  
 $form->setAttribute('action', $this->url('login'));
 
