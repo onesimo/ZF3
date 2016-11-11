@@ -1,67 +1,69 @@
 <?php
-
 namespace Blog\Model;
-
 
 use Zend\Db\TableGateway\Exception\RuntimeException;
 use Zend\Db\TableGateway\TableGatewayInterface;
 
 class PostTable
 {
-	private $tableGateway;
 
-	public function __construct(TableGatewayInterface $tableGateway)
-	{
-		$this->tableGateway = $tableGateway;
-	}
-	
-	public function fetchAll()
-	{
-		return $this->tableGateway->select();
-	}
+    private $tableGateway;
 
-	public function save(Post $post)
-	{
-		$data = [
-			'title' => $post->title,
-			'content' => $post->content
-		];
+    /**
+     *
+     * @var CommentTable
+     */
+    private $commentTable;
 
-		$id = (int) $post->id;
+    public function __construct(TableGatewayInterface $tableGateway, CommentTable $commentTable)
+    {
+        $this->tableGateway = $tableGateway;
+        $this->commentTable = $commentTable;
+    }
 
-		if($id === 0){
-			$this->tableGateway->insert($data);
-			return;
-		}
+    public function fetchAll()
+    {
+        return $this->tableGateway->select();
+    }
 
-		if(!$this->find($id)){
-			 throw new RuntimeException(sprintf(
-                'Could not retrieve the row %d', $id
-            ));
+    public function save(Post $post)
+    {
+        $data = [
+            'title' => $post->title,
+            'content' => $post->content
+        ];
+        $id = (int) $post->id;
+        if ($id === 0) {
+            $this->tableGateway->insert($data);
+            return;
+        }
+        if (! $this->find($id)) {
+            throw new RuntimeException(sprintf('Could not retrieve the row %d', $id));
+        }
+        $this->tableGateway->update($data, [
+            'id' => $id
+        ]);
+    }
 
-		}
-		$this->tableGateway->update($data,['id' => $id]);
+    public function find($id)
+    {
+        $id = (int) $id;
+        $rowset = $this->tableGateway->select([
+            'id' => $id
+        ]);
+        $row = $rowset->current(); // $row == Post
+        if (! $row) {
+            throw new RuntimeException(sprintf('Could not retrieve the row %d', $id));
+        }
+        $rowsComment = $this->commentTable->fetchAll($row->id);
+        $row->comments = iterator_to_array($rowsComment);
+        return $row;
+    }
 
-	}
-
-	public function find($id)
-	{
-		$id = (int) $id;
-		$rowset = $this->tableGateway->select(['id' => $id]);
-		$row = $rowset->current();
-
-		if(!$row) {
-            throw new RuntimeException(sprintf(
-                'Could not retrieve the row %d', $id
-            ));
-			
-		}
-
-		return $row;
-	}
-
-	public function delete($id)
-	{
-		$this->tableGateway->delete(['id'=> (int)$id]);
-	}
+    public function delete($id)
+    {
+        $this->tableGateway->delete([
+            'id' => (int) $id
+        ]);
+    }
 }

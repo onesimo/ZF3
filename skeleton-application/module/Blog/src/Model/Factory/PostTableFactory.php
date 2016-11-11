@@ -18,7 +18,8 @@ class PostTableFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $tableGateway = $container->get(Model\PostTableGateway::class);
-        return new Model\PostTable($tableGateway);
+        $commentTable = $container->get(Model\CommentTable::class);
+        return new PostTable($tableGateway,$commentTable);
     }
 }
 
